@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# رابط خريطة الموقع لسهولة الوصول
+Sitemap: https://elnigm0.github.io/mohamed/sitemap.xml
