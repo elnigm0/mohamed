@@ -1,0 +1,885 @@
+:root {
+    --bg-color: #051622;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-main: #ffffff;
+    --text-dim: #a0a0a0;
+    --accent-blue: #1ba098;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    background-image: url("../images/background.jpg");
+    background-attachment: fixed;
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+/* 
+=============================
+======||START NAVBAR||=======
+=============================
+*/
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5%;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+/* 
+=============================
+=======||END NAVBAR||========
+=============================
+*/
+
+
+
+
+
+
+/* 
+=============================
+=||START(Glass Card Style)||=
+=============================
+*/
+.glass-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    margin: 20px auto;
+    max-width: 900px;
+    overflow: hidden;
+    backdrop-filter: blur(15px);
+}
+
+.card-header {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dots span {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+.header-title {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: #000;
+    
+}
+/* 
+=============================
+==||END(Glass Card Style)||==
+=============================
+*/
+
+
+
+
+
+
+/* 
+=============================
+==||START(About Section)||===
+=============================
+*/
+.about-content {
+    display: flex;
+    padding: 40px;
+    gap: 30px;
+    align-items: center;
+}
+
+.profile-img img {
+    width: 250px;
+    height: 250px;
+    border-radius: 15px;
+    object-fit: cover;
+    filter: grayscale(100%);
+}
+
+.status-tags {
+    margin: 15px 0;
+}
+
+.tag {
+    background: rgba(255,255,255,0.08);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    margin-right: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.green-tag i { color: #27c93f; margin-right: 5px; }
+.purple-tag i { color: #a855f7; margin-right: 5px; }
+
+.tech-stack span {
+    display: inline-block;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-color);
+    padding: 5px 15px;
+    border-radius: 15px;
+    margin-top: 15px;
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+.cta-buttons {
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 10px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.btn-primary { background: #fff; color: #000; }
+.btn-outline { border: 1px solid #fff; color: #fff; }
+/* 
+=============================
+===||END(About Section)||====
+=============================
+*/
+
+
+
+
+
+
+/* 
+=============================
+==||START(Skills Section)||==
+=============================
+*/
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 40px;
+    text-align: center;
+}
+
+.icon-box {
+    background: rgba(255,255,255,0.05);
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border: 1px solid var(--border-color);
+}
+.skills-wrapper {
+    padding: 40px 20px;
+    overflow-x: auto; /* يسمح بالتمرير الأفقي إذا زادت العناصر */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-blue) transparent;
+}
+
+.skills-flex {
+    display: flex;
+    flex-wrap: wrap; /* يوزع العناصر بشكل عرضي وينزل لسطر جديد تلقائياً */
+    justify-content: center;
+    gap: 20px;
+    min-width: max-content; /* يضمن بقاء العناصر بجانب بعضها قبل الـ wrap */
+}
+
+.skill-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 20px;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-blue);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.skill-card i {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+}
+
+.skill-card span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #e0e0e0;
+}
+
+/* أيقونة Next.js مخصصة لأنها غير متوفرة بشكل افتراضي في FontAwesome */
+.next-icon {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2rem;
+    background: #fff;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+/* التجاوب مع الشاشات الصغيرة جداً */
+@media (max-width: 600px) {
+    .skills-flex {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 مهارات في كل صف */
+        min-width: unset;
+        gap: 10px;
+    }
+    
+    .skill-card {
+        width: auto;
+        padding: 15px 10px;
+    }
+    
+    .skill-card i {
+        font-size: 1.8rem;
+    }
+}
+
+/* الحالة الابتدائية: المهارة مخفية ومزاحة للأسفل */
+.skill-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+/* الحالة عند ظهورها: تصبح مرئية وتعود لمكانها */
+.skill-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* 
+=============================
+===||END(Skills Section)||===
+=============================
+*/
+
+/* FAB */
+.fab-container {
+    position: fixed;
+    bottom: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+    pointer-events: none;
+}
+
+.fab-item {
+    pointer-events: auto;
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+}
+:root {
+    --bg-color: #051622;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-main: #ffffff;
+    --accent-blue: #1ba098;
+}
+
+
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Navbar Responsive */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5%;
+    align-items: center;
+    background: rgba(5, 22, 34, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0; z-index: 1000;
+}
+
+.nav-links { display: flex; list-style: none; gap: 20px; }
+.nav-links a { color: white; text-decoration: none; font-weight: 500; }
+.burger { display: none; cursor: pointer; font-size: 1.5rem; }
+
+/* Glass Card */
+.glass-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+}
+
+.card-header {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+
+
+
+/* 
+===================================
+==||START(About Content Layout)||==
+===================================
+*/
+.about-content {
+    display: flex;
+    padding: 40px;
+    gap: 40px;
+    align-items: center;
+}
+
+.profile-img img {
+    width: 300px;
+    border-radius: 20px;
+    filter: grayscale(100%);
+}
+
+.tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+    font-size: 0.8rem;
+    margin: 5px;
+}
+
+/* Social Icons */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+}
+
+.social-icon {
+    font-size: 1.8rem;
+    color: white;
+    transition: 0.3s;
+}
+
+.social-icon:hover { color: var(--accent-blue); transform: translateY(-5px); }
+
+/* --- Media Queries (استجابة الشاشات) --- */
+
+/* للشاشات المتوسطة (Tablets) */
+@media (max-width: 992px) {
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .profile-img img { width: 250px; }
+}
+
+/* للهواتف (Mobile) */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* سيتم تفعيله عبر JS */
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: var(--bg-color);
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .nav-links.active { display: flex; }
+    .burger { display: block; }
+    
+    .about-content { padding: 20px; }
+    h1 { font-size: 1.8rem; }
+    .cta-buttons .btn { width: 100%; margin: 10px 0; }
+}
+
+/* Modal Styles */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+}
+
+.modal-content {
+    margin: 5% auto;
+    width: 90%;
+    max-width: 800px;
+    animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+    color: #fff;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-body { padding: 30px; }
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.modal-img img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.modal-info h2 { margin-bottom: 15px; color: #fff; }
+.modal-info p { color: var(--text-dim); margin-bottom: 20px; line-height: 1.8; }
+
+.modal-actions { margin-top: 30px; display: flex; gap: 10px; }
+
+/* التجاوب مع الموبايل */
+@media (max-width: 768px) {
+    .modal-grid { grid-template-columns: 1fr; }
+    .modal-content { margin: 10% auto; }
+}
+/* تحسين شكل المودال */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* خلفية داكنة جداً */
+    backdrop-filter: blur(12px); /* تأثير الضبابية */
+    z-index: 9999;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.modal-content {
+    max-width: 900px;
+    margin: 40px auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fadeInScale 0.3s ease-out;
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 20px;
+}
+
+.modal-img {
+    flex: 1;
+    min-width: 300px;
+}
+
+.modal-img img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.modal-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.close-modal {
+    cursor: pointer;
+    font-size: 24px;
+    color: #ff5f56; /* لون الأحمر ليطابق أزرار الماك */
+    transition: 0.3s;
+}
+
+.close-modal:hover {
+    transform: rotate(90deg);
+}
+/* تحويل المودال إلى لوحة جانبية Side Panel */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    right: 0; /* يظهر من اليمين */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* خلفية شفافة أخف */
+    backdrop-filter: blur(4px);
+    transition: 0.5s;
+}
+
+.modal-content {
+    position: absolute;
+    right: -100%; /* يبدأ من خارج الشاشة */
+    top: 0;
+    width: 450px; /* عرض محدد لا يملأ الشاشة */
+    height: 100%;
+    background: rgba(10, 25, 41, 0.95);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0; /* شكل طولي */
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    transition: right 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+    overflow-y: auto;
+}
+
+/* عندما ينشط المودال */
+.modal.active {
+    display: block;
+}
+
+.modal.active .modal-content {
+    right: 0; /* يتحرك للداخل */
+}
+
+/* تنسيقات المحتوى داخل اللوحة الجانبية */
+.modal-body {
+    padding: 25px;
+}
+
+.modal-grid {
+    display: flex;
+    flex-direction: column; /* ترتيب رأسي ليناسب العرض الصغير */
+    gap: 20px;
+}
+
+.modal-img img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.modal-info h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.modal-info p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+}
+
+.modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* استجابة الشاشات الصغيرة */
+@media (max-width: 500px) {
+    .modal-content {
+        width: 100%; /* في الموبايل يأخذ الشاشة كاملة لسهولة القراءة */
+    }
+}
+/* تنسيق الحاوي الرئيسي ليظهر المشاريع كشبكة */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* يضع الكروت بجانب بعضها تلقائياً */
+    gap: 30px;
+    padding: 40px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* تعديل عرض الكارت الزجاجي ليتناسب مع الشبكة */
+.glass-card.project-section {
+    margin: 0; /* إلغاء الهوامش لأن الـ gap في الـ grid سيتولى المهمة */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* لتوحيد ارتفاع الكروت */
+}
+
+/* تحسين شكل الكارت الداخلي */
+.project-card-custom {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* للهواتف: اجعل الكروت تأخذ العرض الكامل */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+}
+/* توحيد الحاوية الكبيرة لجميع الأقسام */
+.container {
+    max-width: 900px; /* نفس عرض كارت الـ about */
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+}
+
+/* ضمان أن كل كارت زجاجي يأخذ العرض الكامل المتاح له */
+.glass-card {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+/* تنسيق المحتوى الداخلي ليكون متطابق مع about-content */
+.skills-content {
+    padding: 40px; /* نفس البادينج الموجود في سكشن الـ about */
+}
+
+/* شبكة المهارات: تتوزع بذكاء داخل نفس العرض */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.skill-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.skill-card i { font-size: 2.5rem; }
+.skill-card span { font-size: 0.8rem; color: var(--text-dim); }
+
+/* أيقونة Next.js المخصصة */
+.next-icon {
+    font-weight: bold; font-size: 1.2rem; background: #fff; color: #000;
+    width: 35px; height: 35px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* استجابة الموبايل */
+@media (max-width: 768px) {
+    .skills-content {
+        padding: 20px; /* تقليل البادينج كما فعلنا في الـ about موبايل */
+    }
+    .skills-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 مهارات في الصف بالموبايل */
+    }
+}
+/* --- التعديل النهائي للشاشات الكبيرة 1024px وطالع --- */
+
+@media (min-width: 1024px) {
+    /* نضمن أن الـ container يظل يرص السكاشن تحت بعضها وليس بجانب بعض */
+    .container {
+        display: flex;
+        flex-direction: column; 
+        align-items: center; /* توسيط السكاشن في منتصف الصفحة */
+        max-width: 900px;    /* العرض الثابت الذي طلبته */
+        margin: 0 auto;
+        padding: 40px 0;
+    }
+
+    /* نضمن أن سكشن الـ skills يأخذ نفس عرض الـ about تماماً */
+    .glass-card.skills-section, 
+    .glass-card.about-section {
+        width: 100%;        /* سيأخذ الـ 900px كاملة */
+        margin-bottom: 40px; /* مسافة متناسقة بين السكشنين */
+    }
+
+    /* توزيع المهارات داخل السكشن في الشاشات الكبيرة */
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* 5 مهارات في الصف ليكون الشكل احترافي */
+        gap: 30px;
+        padding: 40px;
+    }
+}
+
+/* --- تعديل إضافي لضمان التناسق في كل الشاشات --- */
+.glass-card {
+    max-width: 900px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* Start content */
+.content p{
+    
+    letter-spacing: 1px;
+    margin: 8px;
+    font-size: 10px;
+}
+.content .pr {
+    text-align: center;
+    color: #b6b6b6;
+}
+
+.hr-content {
+    
+    width: 50%;
+    margin-left: 25%;
+    margin-right:25%;
+}
+
+
+
+
+
+
+
+/* 
+==============================
+==||START((((((SNOW)))))))||==
+==============================
+*/
+.snowflake {
+    position: fixed;
+    top: -10px;
+    color: #fff;
+    font-size: 1rem;
+    pointer-events: none; /* لكي لا تعيق الضغط على أي شيء */
+    z-index: 9999;
+    animation: fall linear forwards;
+}
+
+/* حركة السقوط */
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* تأثير نبض للأيقونة عند الضغط */
+.fab-item:active {
+    transform: scale(0.9);
+}
+/* 
+==============================
+==||END((((((SNOW)))))))||====
+==============================
+*/
+
+
+/* المتغيرات الافتراضية (وضع الشتاء/الأزرق) */
+:root {
+    --bg-img: url("../images/background.jpg");
+    --header-bg: url('../images/cover.jpg'); /* صورة الهيدر الصغيرة */
+    --nav-scroll-bg: rgba(5, 22, 34, 0.9); /* لون النبار عند السكرول */
+    --accent-blue: #1ba098;
+    --text-main: #ffffff;
+    --card-bg: rgba(255, 255, 255, 0.05);
+}
+
+/* المتغيرات عند تفعيل الوضع الذهبي */
+body.gold-mode {
+    --bg-img: none; /* حذف صورة الخلفية تماماً */
+    --bg-color: #1a1a00; /* لون خلفية سادة فخم */
+    --header-bg: linear-gradient(90deg, #FFD700, #b8860b); /* لون ذهبي بدلاً من الصورة */
+    --nav-scroll-bg: rgba(40, 40, 0, 0.95); /* لون النبار ذهبي داكن عند السكرول */
+    --accent-blue: #FFD700;
+    --card-bg: rgba(255, 215, 0, 0.05);
+}
+
+/* تطبيق المتغيرات على العناصر */
+body {
+    background-color: var(--bg-color, #051622);
+    background-image: var(--bg-img); /* ستصبح none في الوضع الذهبي */
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.card-header {
+    background: var(--header-bg) !important; /* سيتحول لذهبي */
+    background-size: cover !important;
+}
+
+/* تعديل الهيدر ليأخذ اللون من المتغيرات */
+.navbar.scrolled {
+    background: var(--nav-scroll-bg) !important;
+}
