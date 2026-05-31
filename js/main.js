@@ -151,7 +151,6 @@ window.addEventListener('scroll', () => {
 =======||START AI CHAT||=====
 =============================
 */
-// 1. دالة جلب البيانات من السيرفر السحابي المتوافقة مع تحديث Netlify الجديد
 async function askMyAIChatbot(textFromUser) {
     const chatDisplay = document.getElementById('chat-output');
     if (!chatDisplay) return;
@@ -165,21 +164,18 @@ async function askMyAIChatbot(textFromUser) {
         
         const data = await response.json();
         
-        // التعديل الأساسي لقراءة البنية الجديدة لـ Netlify AI Gateway
-        if (data && data.content && data.content[0] && data.content[0].text) {
-            chatDisplay.innerText = data.content[0].text; 
-        } else if (data && data.reply) {
-            chatDisplay.innerText = data.reply;
+        // التحقق من استقبال الرد بنجاح من الدالة المستقرة
+        if (data && data.reply) {
+            chatDisplay.innerText = data.reply; 
         } else {
             chatDisplay.innerText = "للأسف، واجه السيرفر مشكلة في صياغة الرد.";
         }
     } catch (error) {
-        chatDisplay.innerText = "عذراً، لم نتمكن من الوصول للذكاء الاصطناعي. تأكد من رفع الموقع بشكل صحيح.";
+        chatDisplay.innerText = "عذراً، لم نتمكن من الوصول للذكاء الاصطناعي.";
         console.error("Error fetching AI:", error);
     }
 }
 
-// 2. إدارة تشغيل السيرش والأزرار والنافذة المنبثقة
 const sendBtn = document.getElementById('send-btn');
 const userInput = document.getElementById('user-input');
 const aiPopup = document.getElementById('ai-response-popup');
@@ -192,23 +188,17 @@ function handleAISubmission() {
     const query = userInput.value.trim();
     if (!query) return;
 
-    // أولاً: إظهار النافذة المنبثقة وتنبيه المستخدم
     aiPopup.style.display = 'block';
     chatOutput.innerText = "جاري الاتصال بـ Claude وتجهيز الرد الحقيقي... 🤖";
 
-    // ثانياً: إرسال السؤال للدالة السحابية
     askMyAIChatbot(query);
-
-    // ثالثاً: تفريغ حقل الإدخال بعد الإرسال مباشرة
     userInput.value = "";
 }
 
-// تشغيل عند الضغط على زر الإرسال
 if (sendBtn) {
     sendBtn.addEventListener('click', handleAISubmission);
 }
 
-// تشغيل عند الضغط على Enter داخل حقل الكتابة
 if (userInput) {
     userInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -217,16 +207,11 @@ if (userInput) {
     });
 }
 
-// إغلاق النافذة عند الضغط على X
 if (closePopupBtn && aiPopup) {
     closePopupBtn.addEventListener('click', () => {
         aiPopup.style.display = 'none';
     });
 }
-
-aiPopup.style.display = 'block';
-chatOutput.innerText = "جاري الاتصال بـ Claude...";
-
 /* =============================
 ========||END AI CHAT||======
 =============================
