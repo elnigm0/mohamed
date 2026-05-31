@@ -1,18 +1,15 @@
 import Anthropic from '@anthropic-ai/sdk';
 
-export default async (request, context) => {
-    // قراءة السؤال القادم من المستخدم (الفرونت إند)
-    const { question } = await request.json();
-
+export default async () => {
     const anthropic = new Anthropic();
 
     const response = await anthropic.messages.create({
-        model: 'claude-3-5-sonnet-20241022', // الموديل المستقر والسريع لعام 2026
-        max_tokens: 1024,
+        model: 'claude-opus-4-8',
+        max_tokens: 4096,
         messages: [
             {
                 role: 'user',
-                content: question
+                content: 'How can AI improve my coding?'
             }
         ]
     });
