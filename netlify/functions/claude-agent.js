@@ -1,24 +1,26 @@
-import { Anthropic } from '@anthropic-ai/sdk';
+const { Anthropic } = require('@anthropic-ai/sdk');
 
-export default async (request, context) => {
-  // 1. الحماية: السماح بطلبات POST فقط
-  if (request.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method Not Allowed - استخدم POST' }), {
-      status: 405,
-      headers: { 'Content-Type': 'application/json' }
-    });
+exports.handler = async (event, context) => {
+  // 1. حماية الدالة: السماح بطلبات POST فقط
+  if (event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ error: 'Method Not Allowed' }),
+    };
   }
 
   try {
-    // 2. قراءة السؤال المرسل من الفرونت إند (مستند إلى نظام الـ Request الحديث)
-    const buffer = await request.json();
+    // 2. قراءة السؤال القادم من ملف main.js
+    const buffer = JSON.parse(event.body);
     const userQuestion = buffer.question;
 
-    // 3. الاتصال بـ Claude عبر بوابة Netlify الذكية تلقائياً وبدون الـ API Key الخاص بك
-    const anthropic = new Anthropic();
+    // 3. الاتصال المباشر بـ Claude باستخدام المفتاح السري الخاص بك
+    const anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
 
     const response = await anthropic.messages.create({
-      model: 'claude-opus-4-8', // الاسم الصحيح بالشرطات كما في وثيقة Netlify
+      model: 'claude-3-5-sonnet-20241022', // موديل رسمي، سريع ومستقر جداً
       max_tokens: 1024,
       messages: [
         { 
@@ -28,17 +30,18 @@ export default async (request, context) => {
       ],
     });
 
-    // 4. إرسال الرد الحقيقي إلى الفرونت إند بصيغة متوافقة مع الـ Gateway
-    return new Response(JSON.stringify({ reply: response.content[0].text }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    // 4. إرجاع الرد بنجاح للفرونت إند
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reply: response.content[0].text }),
+    };
 
   } catch (error) {
-    console.error('حدث خطأ في السيرفر:', error);
-    return new Response(JSON.stringify({ error: 'فشل الذكاء الاصطناعي في الرد عبر بوابة Netlify' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    console.error('حدث خطأ في الدالة السحابية:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'فشل السيرفر في جلب الرد، تأكد من الـ API Key الخاص بك' }),
+    };
   }
 };
