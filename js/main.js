@@ -165,81 +165,62 @@ window.addEventListener('scroll', () => {
 
 
 
-
-
-/* ==========================================
-  تعديل الـ nav والـ header لإضافة ذكاء اصطناعي
-============================================ */
-// 1. استدعاء العناصر من الـ HTML
-const openAiBtn = document.getElementById('open-ai-btn');
-const aiPopup = document.getElementById('ai-response-popup');
-const closePopupBtn = document.getElementById('close-popup-btn');
-const sendBtn = document.getElementById('send-btn');
-const userInput = document.getElementById('user-input');
-const chatOutput = document.getElementById('chat-output');
-
-// 2. دالة جلب البيانات من السيرفر السحابي (Netlify Function)
+// 1. دالة جلب البيانات من السيرفر السحابي (Netlify Function)
 async function askMyAIChatbot(textFromUser) {
+    const chatDisplay = document.getElementById('chat-output');
+
     try {
-        const response = await fetch('//.netlify/functions/claude-agent', {
+        // الاتصال بالملف السري الآمن في الخلفية
+        const response = await fetch('/.netlify/functions/claude-agent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question: textFromUser })
+            body: JSON.stringify({ question: textFromUser }) // نرسل السؤال هنا
         });
         
         const data = await response.json();
         
+        // 🌟 هنا النتيجة بتظهر! بنأخذ الـ reply ونعرضه في الـ HTML
         if (data.reply) {
-            chatOutput.innerText = data.reply; 
+            chatDisplay.innerText = data.reply; 
         } else {
-            chatOutput.innerText = "عذراً، واجه السيرفر مشكلة في صياغة الرد.";
+            chatDisplay.innerText = "للأسف، واجه السيرفر مشكلة في صياغة الرد.";
         }
     } catch (error) {
-        chatOutput.innerText = "لم نتمكن من الوصول للذكاء الاصطناعي. يرجى تفعيل ntl dev محلياً أو رفع الملفات على نيتليفاي وتفعيل الـ API Key.";
-        console.error("AI Error:", error);
+        chatDisplay.innerText = "عذراً، لم نتمكن من الوصول للذكاء الاصطناعي. تأكد من تشغيل ntl dev أو رفع الموقع.";
+        console.error("Error fetching AI:", error);
     }
 }
 
-// 3. معالجة إرسال السؤال وإظهار جاري التفكير
+// 2. إدارة تشغيل السيرش والأزرار والنافذة المنبثقة
+const sendBtn = document.getElementById('send-btn');
+const userInput = document.getElementById('user-input');
+const aiPopup = document.getElementById('ai-response-popup');
+const chatOutput = document.getElementById('chat-output');
+const closePopupBtn = document.getElementById('close-popup-btn');
+
 function handleAISubmission() {
     const query = userInput.value.trim();
     if (!query) return;
 
-    // إظهار نص الانتظار في مساحة النتائج بالأسفل دون إخفاء بوكس السيرش
-    chatOutput.innerText = "جاري الاتصال بـ Claude وتجهيز الإجابة... 🤖📚";
+    // أولاً: إظهار النافذة المنبثقة فوراً ونقول للمستخدم انتظر ثواني
+    aiPopup.style.display = 'block';
+    chatOutput.innerText = "جاري الاتصال بـ Claude وتجهيز الرد الحقيقي... 🤖";
 
-    // إرسال الطلب
+    // ثانياً: نرسل السؤال للدالة لتجلب النتيجة الحقيقية
     askMyAIChatbot(query);
 
-    // تفريغ حقل الكتابة ليصبح جاهزاً للسؤال التالي
+    // ثالثاً: تفريغ حقل السيرش ليكون جاهزاً للسؤال القادم
     userInput.value = "";
 }
 
-// 4. التحكم في فتح وإغلاق النافذة من خلال الأيقونة والعلامة X
-if (openAiBtn) {
-    openAiBtn.addEventListener('click', () => {
-        // تبديل ظهور النافذة (فتح / إغلاق) عند الضغط على أيقونة الروبوت
-        if (aiPopup.style.display === 'block') {
-            aiPopup.style.display = 'none';
-        } else {
-            aiPopup.style.display = 'block';
-            userInput.focus(); // وضع مؤشر الكتابة داخل الحقل فوراً عند الفتح
-        }
-    });
-}
-
-if (closePopupBtn) {
-    closePopupBtn.addEventListener('click', () => {
-        aiPopup.style.display = 'none';
-    });
-}
-
-// 5. ربط أزرار الإرسال
-if (sendBtn) {
+// تشغيل الـ AI عند الضغط على أيقونة الطائرة الورقية (الإرسال)
+if(sendBtn) {
     sendBtn.addEventListener('click', handleAISubmission);
 }
 
-if (userInput) {
+// تشغيل الـ AI عند الضغط على زر Enter من الكيبورد داخل السيرش
+if(userInput) {
+    userInput.value = ""; // تصفير عند تحميل الصفحة
     userInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             handleAISubmission();
@@ -247,9 +228,9 @@ if (userInput) {
     });
 }
 
-
-
-
-
-
-
+// إغلاق نافذة النتائج تماماً عند الضغط على علامة X
+if(closePopupBtn) {
+    closePopupBtn.addEventListener('click', () => {
+        aiPopup.style.display = 'none';
+    });
+}
