@@ -1,7 +1,7 @@
 const { Anthropic } = require('@anthropic-ai/sdk');
 
 exports.handler = async (event, context) => {
-  // الحماية: السماح بطلبات POST فقط
+  // السماح بطلبات POST فقط
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
@@ -10,41 +10,36 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // قراءة السؤال المرسل من الفرونت إند
     const buffer = JSON.parse(event.body);
     const userQuestion = buffer.question;
 
-    // الاتصال المباشر بـ Anthropic باستخدام الـ API Key المخزن في إعدادات نيتليفاى
+    // الاتصال بـ Claude باستخدام الـ API Key الخاص بك لتجنب ليميت نيتليفاى
     const anthropic = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
 
     const response = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022', // الموديل المستقر المعتمد
+      model: 'claude-3-5-sonnet-20241022',
       max_tokens: 1024,
       messages: [
-        { 
-          role: 'user', 
-          content: `أنت المساعد الذكي لمطور الواجهات الأمامية محمد عصام. أجب على هذا السؤال باحترافية وبشكل مختصر: ${userQuestion}` 
-        }
+        { role: 'user', content: userQuestion }
       ],
     });
 
-    // إرسال الرد بصيغة متوافقة مع الفرونت إند
     return {
       statusCode: 200,
       headers: { 
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*' // لحل أي مشكلة حظر بين الدومينات
       },
       body: JSON.stringify({ reply: response.content[0].text }),
     };
 
   } catch (error) {
-    console.error('حدث خطأ في السيرفر:', error);
+    console.error('Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'فشل السيرفر في جلب الرد من Claude' }),
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };
