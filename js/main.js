@@ -164,7 +164,6 @@ window.addEventListener('scroll', () => {
 
 
 
-
 // 1. دالة جلب البيانات من السيرفر السحابي (Netlify Function)
 async function askMyAIChatbot(textFromUser) {
     const chatDisplay = document.getElementById('chat-output');
@@ -179,14 +178,17 @@ async function askMyAIChatbot(textFromUser) {
         
         const data = await response.json();
         
-        // 🌟 هنا النتيجة بتظهر! بنأخذ الـ reply ونعرضه في الـ HTML
-        if (data.reply) {
-            chatDisplay.innerText = data.reply; 
+        // 🌟 التعديل هنا: نتحقق من وجود محتوى الرد بالشكل الجديد لـ Netlify AI Gateway
+        if (data && data.content && data.content[0] && data.content[0].text) {
+            chatDisplay.innerText = data.content[0].text; 
+        } else if (data && data.reply) {
+            // كخطة بديلة (Fallback) إذا قام الكود بإرجاع الحقل المباشر
+            chatDisplay.innerText = data.reply;
         } else {
             chatDisplay.innerText = "للأسف، واجه السيرفر مشكلة في صياغة الرد.";
         }
     } catch (error) {
-        chatDisplay.innerText = "عذراً، لم نتمكن من الوصول للذكاء الاصطناعي. تأكد من تشغيل ntl dev أو رفع الموقع.";
+        chatDisplay.innerText = "عذراً، لم نتمكن من الوصول للذكاء الاصطناعي. تأكد من رفع الموقع بشكل صحيح.";
         console.error("Error fetching AI:", error);
     }
 }
@@ -234,3 +236,8 @@ if(closePopupBtn) {
         aiPopup.style.display = 'none';
     });
 }
+
+
+const response = await fetch('/.netlify/functions/claude-agent', {
+    
+
