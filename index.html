@@ -41,18 +41,28 @@
 =====( Start header)======
 ==========================
 -->
-    <nav class="navbar">
-        <div class="logo">Mohamed Essam</div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="index.html#skills">Skills</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="burger" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
-        </div>
-    </nav>
+<nav class="navbar">
+    <div class="logo">Mohamed Essam</div>
+    
+    <!-- صندوق البحث هنا أصبح حراً ومستقلاً ليعمل على كل الشاشات فوراً -->
+    <div class="ai-search-box">
+        <input type="text" id="user-input" placeholder="اسأل ذكاء كلوود...">
+        <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+
+    <!-- القائمة الجانبية للموبايل واللينك العادي للكمبيوتر -->
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    
+    <div class="burger" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+</nav>
+
 <!-- 
 ==========================
 =====( End  header )======
