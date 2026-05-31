@@ -42,6 +42,8 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 
 
 
+
+
 /* 
 =============================
 ======||START SKILLS||=======
@@ -161,6 +163,89 @@ window.addEventListener('scroll', () => {
 */
 
 
+
+
+
+
+/* ==========================================
+  تعديل الـ nav والـ header لإضافة ذكاء اصطناعي
+============================================ */
+// 1. استدعاء العناصر من الـ HTML
+const openAiBtn = document.getElementById('open-ai-btn');
+const aiPopup = document.getElementById('ai-response-popup');
+const closePopupBtn = document.getElementById('close-popup-btn');
+const sendBtn = document.getElementById('send-btn');
+const userInput = document.getElementById('user-input');
+const chatOutput = document.getElementById('chat-output');
+
+// 2. دالة جلب البيانات من السيرفر السحابي (Netlify Function)
+async function askMyAIChatbot(textFromUser) {
+    try {
+        const response = await fetch('//.netlify/functions/claude-agent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: textFromUser })
+        });
+        
+        const data = await response.json();
+        
+        if (data.reply) {
+            chatOutput.innerText = data.reply; 
+        } else {
+            chatOutput.innerText = "عذراً، واجه السيرفر مشكلة في صياغة الرد.";
+        }
+    } catch (error) {
+        chatOutput.innerText = "لم نتمكن من الوصول للذكاء الاصطناعي. يرجى تفعيل ntl dev محلياً أو رفع الملفات على نيتليفاي وتفعيل الـ API Key.";
+        console.error("AI Error:", error);
+    }
+}
+
+// 3. معالجة إرسال السؤال وإظهار جاري التفكير
+function handleAISubmission() {
+    const query = userInput.value.trim();
+    if (!query) return;
+
+    // إظهار نص الانتظار في مساحة النتائج بالأسفل دون إخفاء بوكس السيرش
+    chatOutput.innerText = "جاري الاتصال بـ Claude وتجهيز الإجابة... 🤖📚";
+
+    // إرسال الطلب
+    askMyAIChatbot(query);
+
+    // تفريغ حقل الكتابة ليصبح جاهزاً للسؤال التالي
+    userInput.value = "";
+}
+
+// 4. التحكم في فتح وإغلاق النافذة من خلال الأيقونة والعلامة X
+if (openAiBtn) {
+    openAiBtn.addEventListener('click', () => {
+        // تبديل ظهور النافذة (فتح / إغلاق) عند الضغط على أيقونة الروبوت
+        if (aiPopup.style.display === 'block') {
+            aiPopup.style.display = 'none';
+        } else {
+            aiPopup.style.display = 'block';
+            userInput.focus(); // وضع مؤشر الكتابة داخل الحقل فوراً عند الفتح
+        }
+    });
+}
+
+if (closePopupBtn) {
+    closePopupBtn.addEventListener('click', () => {
+        aiPopup.style.display = 'none';
+    });
+}
+
+// 5. ربط أزرار الإرسال
+if (sendBtn) {
+    sendBtn.addEventListener('click', handleAISubmission);
+}
+
+if (userInput) {
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleAISubmission();
+        }
+    });
+}
 
 
 
