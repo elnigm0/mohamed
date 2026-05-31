@@ -223,6 +223,10 @@ if (closePopupBtn && aiPopup) {
         aiPopup.style.display = 'none';
     });
 }
+
+aiPopup.style.display = 'block';
+chatOutput.innerText = "جاري الاتصال بـ Claude...";
+
 /* =============================
 ========||END AI CHAT||======
 =============================
