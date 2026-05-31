@@ -1,7 +1,7 @@
 const { Anthropic } = require('@anthropic-ai/sdk');
 
 exports.handler = async (event, context) => {
-  // 1. حماية الدالة: السماح بطلبات POST فقط
+  // الحماية: السماح بطلبات POST فقط
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
@@ -10,38 +10,41 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // 2. قراءة السؤال القادم من ملف main.js
+    // قراءة السؤال المرسل من الفرونت إند
     const buffer = JSON.parse(event.body);
     const userQuestion = buffer.question;
 
-    // 3. الاتصال المباشر بـ Claude باستخدام المفتاح السري الخاص بك
+    // الاتصال المباشر بـ Anthropic باستخدام الـ API Key المخزن في إعدادات نيتليفاى
     const anthropic = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
 
     const response = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022', // موديل رسمي، سريع ومستقر جداً
+      model: 'claude-3-5-sonnet-20241022', // الموديل المستقر المعتمد
       max_tokens: 1024,
       messages: [
         { 
           role: 'user', 
-          content: `أنت المساعد الذكي لمطور الواجهات الأمامية محمد عصام. أجب على هذا السؤال باحترافية وبشكل مختصر كلغة مساعد شخصي: ${userQuestion}` 
+          content: `أنت المساعد الذكي لمطور الواجهات الأمامية محمد عصام. أجب على هذا السؤال باحترافية وبشكل مختصر: ${userQuestion}` 
         }
       ],
     });
 
-    // 4. إرجاع الرد بنجاح للفرونت إند
+    // إرسال الرد بصيغة متوافقة مع الفرونت إند
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
       body: JSON.stringify({ reply: response.content[0].text }),
     };
 
   } catch (error) {
-    console.error('حدث خطأ في الدالة السحابية:', error);
+    console.error('حدث خطأ في السيرفر:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'فشل السيرفر في جلب الرد، تأكد من الـ API Key الخاص بك' }),
+      body: JSON.stringify({ error: 'فشل السيرفر في جلب الرد من Claude' }),
     };
   }
 };
